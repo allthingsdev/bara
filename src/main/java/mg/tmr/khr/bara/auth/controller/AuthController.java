@@ -7,9 +7,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AuthController {
 
-	@GetMapping("/logout")
+	@GetMapping("/login")
 	public ModelAndView showLoginPage(ModelAndView loginPage) {
-		loginPage.setViewName("logout");
+		loginPage.setViewName("login");
 		return loginPage;
+	}
+	
+	@GetMapping("/register")
+	public ModelAndView showRegistrationPage(ModelAndView registrationPage) {
+		registrationPage.setViewName("register");
+		return registrationPage;
 	}
 }

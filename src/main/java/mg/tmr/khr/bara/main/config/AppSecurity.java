@@ -14,9 +14,6 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/register").permitAll()
 			.antMatchers("/login").permitAll()
-			.antMatchers("/confirm").permitAll();
-		 
+			.antMatchers("/confirm").permitAll();		 
 	}
-
-
 }
