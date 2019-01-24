@@ -51,6 +51,9 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
+    @Column(name = "enabled")
+	private boolean enabled;
+    
     @NotBlank @Size(max = 255)
     @Column(name = "password")
     private String password;
@@ -58,7 +61,10 @@ public class User {
     @Transient
     private String passwordConfirm;
     
-    @Column(name = "created_on")
+    @Column(name = "confirmation_token")
+	private String confirmationToken;
+
+	@Column(name = "created_on")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
     
@@ -118,12 +124,28 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public String getConfirmationToken() {
+		return confirmationToken;
+	}
+
+	public void setConfirmationToken(String confirmationToken) {
+		this.confirmationToken = confirmationToken;
+	}
+    
 	public String getEmail() {
 		return firstName;
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean value) {
+		this.enabled = value;
 	}
 	
 	public Date getCreatedOn() {

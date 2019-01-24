@@ -53,6 +53,21 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        <dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>bootstrapvalidator</artifactId>
+		    <version>0.5.3</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -61,6 +76,15 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+  			<groupId>com.nulab-inc</groupId>
+  			<artifactId>zxcvbn</artifactId>
+  			<version>1.2.3</version>
 		</dependency>
 	</dependencies>
 

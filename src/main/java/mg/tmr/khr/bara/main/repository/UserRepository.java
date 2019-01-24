@@ -8,4 +8,6 @@ import mg.tmr.khr.bara.main.model.User;
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Integer>  {
 
+	User findByEmail(String email);
+	User findByConfirmationToken(String confirmationToken);
 }
