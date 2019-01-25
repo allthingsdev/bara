@@ -31,7 +31,11 @@ public class User {
     @GenericGenerator(name = "native", strategy = "native")
 	private Integer user_id;
 	
-	@Size(max = 255)
+	@NotBlank @Email @Size(max = 255)
+    @Column(name = "email", unique = true)
+    private String email;
+
+    @Size(max = 255)
     @Column(name = "first_name")
     private String firstName;
 
@@ -43,18 +47,14 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
     
-    @NotBlank @Size(max = 255)
-    @Column(name = "user_name",  nullable = false)
+    @Size(max = 255)
+    @Column(name = "user_name",  nullable = true)
     private String userName;
-
-    @NotBlank @Email @Size(max = 255)
-    @Column(name = "email", unique = true)
-    private String email;
 
     @Column(name = "enabled")
 	private boolean enabled;
     
-    @NotBlank @Size(max = 255)
+    @Size(max = 255)
     @Column(name = "password")
     private String password;
     
