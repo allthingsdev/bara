@@ -1,130 +1,49 @@
 package mg.tmr.khr.bara.main.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.Transient;
 
 @Entity
-@Table(name="`users`")
+@Table(name = "thatuser")
 public class User {
-	
-	/*===============START TABLE COLUMNS===================*/
+
 	@Id
-	@Column(name = "user_id", updatable = false, nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-	private Integer user_id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private int id;
 	
-	@NotBlank @Email @Size(max = 255)
-    @Column(name = "email", unique = true)
-    private String email;
-
-    @Size(max = 255)
-    @Column(name = "first_name")
-    private String firstName;
-
-	@Size(max = 255)
-    @Column(name = "middle_name")
-    private String middleName;
+	@Column(name = "email", nullable = false, unique = true)
+	@Email(message = "Please provide a valid e-mail")
+	@NotEmpty(message = "Please provide an e-mail")
+	private String email;
 	
-    @Size(max = 255)
-    @Column(name = "last_name")
-    private String lastName;
-    
-    @Size(max = 255)
-    @Column(name = "user_name",  nullable = true)
-    private String userName;
-
-    @Column(name = "enabled")
+	@Column(name = "password")
+	@Transient
+	private String password;
+	
+	@Column(name = "first_name")
+	@NotEmpty(message = "Please provide your first name")
+	private String firstName;
+	
+	@Column(name = "last_name")
+	@NotEmpty(message = "Please provide your last name")
+	private String lastName;
+	
+	@Column(name = "enabled")
 	private boolean enabled;
-    
-    @Size(max = 255)
-    @Column(name = "password")
-    private String password;
-    
-    @Transient
-    private String passwordConfirm;
-    
-    @Column(name = "confirmation_token")
+	
+	@Column(name = "confirmation_token")
 	private String confirmationToken;
 
-	@Column(name = "created_on")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdOn;
-    
-    @Column(name = "created_by",  nullable = true)
-    private String createdBy;
-    
-    @Column(name = "updated_on")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedOn;
-    
-    @Column(name = "updated_by",  nullable = true)
-    private String updatedBy;
-    
-    /*-----------start relations-----------*/
-
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_group_id")
-    private UserGroup userGroup;
-    
-    /*-----------end relations-----------*/
-    
-    /*===============END TABLE COLUMNS===================*/
-    
-    /*===============mutators/accessors==================*/
-    
-    public Integer getUserId() {
-		return user_id;
-	}
-	public void setId(Integer user_id) {
-		this.user_id = user_id;
-	}
 	
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	public String getLastName() {
-		return firstName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getConfirmationToken() {
 		return confirmationToken;
 	}
@@ -132,14 +51,48 @@ public class User {
 	public void setConfirmationToken(String confirmationToken) {
 		this.confirmationToken = confirmationToken;
 	}
-    
-	public String getEmail() {
+
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getFirstName() {
 		return firstName;
 	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public boolean getEnabled() {
 		return enabled;
 	}
@@ -147,19 +100,6 @@ public class User {
 	public void setEnabled(boolean value) {
 		this.enabled = value;
 	}
-	
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-	
-	public Date getUpdatedOn() {
-		return updatedOn;
-	}
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
-	}
+
 
 }
