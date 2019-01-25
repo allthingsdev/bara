@@ -1,23 +1,33 @@
 package mg.tmr.khr.bara.main.model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Transient;
 
 @Entity
-@Table(name = "thatuser")
+@Table(name = "`user`")
 public class User {
 
+	/*===============START TABLE COLUMNS===================*/
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	@Column(name = "user_id", updatable = false, nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
 	private int id;
 	
 	@Column(name = "email", nullable = false, unique = true)
@@ -37,13 +47,42 @@ public class User {
 	@NotEmpty(message = "Please provide your last name")
 	private String lastName;
 	
+	@Size(max = 255)
+    @Column(name = "user_name",  nullable = true)
+    private String userName;
+	
 	@Column(name = "enabled")
 	private boolean enabled;
 	
 	@Column(name = "confirmation_token")
 	private String confirmationToken;
 
+	@Column(name = "created_on")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdOn;
+    
+    @Column(name = "created_by",  nullable = true)
+    private String createdBy;
+    
+    @Column(name = "updated_on")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedOn;
+    
+    @Column(name = "updated_by",  nullable = true)
+    private String updatedBy;
 	
+    /*-----------start relations-----------*/
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_group_id")
+    private UserGroup userGroup;
+    
+    /*-----------end relations-----------*/
+    
+    /*===============END TABLE COLUMNS===================*/
+    
+    /*===============mutators/accessors==================*/
+    
 	public String getConfirmationToken() {
 		return confirmationToken;
 	}
@@ -51,7 +90,6 @@ public class User {
 	public void setConfirmationToken(String confirmationToken) {
 		this.confirmationToken = confirmationToken;
 	}
-
 
 	public int getId() {
 		return id;
@@ -85,6 +123,13 @@ public class User {
 		this.lastName = lastName;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -99,6 +144,21 @@ public class User {
 
 	public void setEnabled(boolean value) {
 		this.enabled = value;
+	}
+	
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+	
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+	
+	public Date getUpdatedOn() {
+		return updatedOn;
+	}
+	public void setUpdatedOn(Date updatedOn) {
+		this.updatedOn = updatedOn;
 	}
 
 
