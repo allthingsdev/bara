@@ -80,7 +80,7 @@ public class RegistrationController {
 			registrationEmail.setTo(user.getEmail());
 			registrationEmail.setSubject("Registration Confirmation");
 			registrationEmail.setText("To confirm your e-mail address, please click the link below:\n"
-					+ appUrl + "/confirm?token=" + user.getConfirmationToken());
+					+ appUrl + "/setpassword?token=" + user.getConfirmationToken());
 			registrationEmail.setFrom("noreply@domain.com");
 			
 			emailService.sendEmail(registrationEmail);
@@ -93,8 +93,8 @@ public class RegistrationController {
 	}
 	
 	// Process confirmation link
-	@GetMapping(value="/confirm")
-	public ModelAndView confirmRegistration(ModelAndView modelAndView, @RequestParam("token") String token) {
+	@GetMapping(value="/setpassword")
+	public ModelAndView setPassword(ModelAndView modelAndView, @RequestParam("token") String token) {
 			
 		User user = userService.findByConfirmationToken(token);
 			
@@ -104,15 +104,15 @@ public class RegistrationController {
 			modelAndView.addObject("confirmationToken", user.getConfirmationToken());
 		}
 			
-		modelAndView.setViewName("confirm_registration");
+		modelAndView.setViewName("set_password");
 		return modelAndView;		
 	}
 	
 	// Process confirmation link
-	@PostMapping(value="/confirm")
-	public ModelAndView confirmRegistration(ModelAndView modelAndView, BindingResult bindingResult, @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
+	@PostMapping(value="/setpassword")
+	public ModelAndView setPassword(ModelAndView modelAndView, BindingResult bindingResult, @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
 				
-		modelAndView.setViewName("confirm_registration");
+		modelAndView.setViewName("set_password");
 		
 		Zxcvbn passwordCheck = new Zxcvbn();
 		
