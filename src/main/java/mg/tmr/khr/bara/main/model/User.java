@@ -1,5 +1,6 @@
 package mg.tmr.khr.bara.main.model;
 
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,7 +31,7 @@ public class User {
 	@Column(name = "user_id", updatable = false, nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-	private int id;
+	private Long id;
 	
 	@Column(name = "email", nullable = false, unique = true)
 	@Email(message = "Please provide a valid e-mail")
@@ -75,6 +78,15 @@ public class User {
     @JoinColumn(name="user_group_id")
     private UserGroup userGroup;
     
+    @ManyToMany
+    @JoinTable( 
+        name = "users_roles", 
+        joinColumns = @JoinColumn(
+          name = "user_id", referencedColumnName = "id"), 
+        inverseJoinColumns = @JoinColumn(
+          name = "role_id", referencedColumnName = "id")) 
+    private Collection<UserRole> roles;
+    
     /*-----------end relations-----------*/
     
     /*===============END TABLE COLUMNS===================*/
@@ -89,11 +101,11 @@ public class User {
 		this.confirmationToken = confirmationToken;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

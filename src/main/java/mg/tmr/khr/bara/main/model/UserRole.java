@@ -1,15 +1,15 @@
 package mg.tmr.khr.bara.main.model;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -52,11 +52,14 @@ public class UserRole {
     
     /*-----------start relations-----------*/
     
-    @OneToOne(mappedBy="userRole")
-    private UserGroup userGroup;
-    
-    @OneToMany(mappedBy="userRole")
-    private List<UserRole> userRole;
+    @ManyToMany
+    @JoinTable(
+        name = "roles_permissions", 
+        joinColumns = @JoinColumn(
+          name = "role_id", referencedColumnName = "id"), 
+        inverseJoinColumns = @JoinColumn(
+          name = "permission_id", referencedColumnName = "id"))
+    private Collection<Permission> permission;
     
     /*-----------end relations-----------*/
     
@@ -64,7 +67,7 @@ public class UserRole {
     
     /*===============mutators/accessors==================*/
     
-	public int getUserRoleId() {
+    public int getUserRoleId() {
 		return userRoleId;
 	}
 
@@ -120,19 +123,13 @@ public class UserRole {
 		this.updatedBy = updatedBy;
 	}
 
-	public UserGroup getUserGroup() {
-		return userGroup;
+	public Collection<Permission> getPermission() {
+		return permission;
 	}
 
-	public void setUserGroup(UserGroup userGroup) {
-		this.userGroup = userGroup;
+	public void setPermission(Collection<Permission> permission) {
+		this.permission = permission;
 	}
 
-	public List<UserRole> getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(List<UserRole> userRole) {
-		this.userRole = userRole;
-	}
+	
 }
