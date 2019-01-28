@@ -13,10 +13,22 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/register").permitAll()
-			.antMatchers("/login").permitAll()
-			.antMatchers("/confirm").permitAll();		 
+		http
+			.authorizeRequests()
+				.antMatchers("/register").permitAll()
+				.antMatchers("/login").permitAll()
+				.antMatchers("/confirm").permitAll()
+				.antMatchers("/", "/home", "/about").permitAll()
+	            .antMatchers("/admin/**").hasAnyRole("ADMIN")
+	            .antMatchers("/user/**").hasAnyRole("USER")
+	            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+	            .loginPage("/login")
+	            .permitAll()
+            .and()
+            .logout()
+            	.permitAll();	 
 	}
 	
 	@Bean
