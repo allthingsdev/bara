@@ -24,6 +24,10 @@ public class UserService {
 		return userRepository.findByConfirmationToken(confirmationToken);
 	}
 	
+	public User findByUserName(String userName) {
+		return userRepository.findByUserName(userName);
+	}
+	
 	public void saveUser(User user) {
 		userRepository.save(user);
 	}

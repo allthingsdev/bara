@@ -31,12 +31,13 @@ public class RegistrationController {
 	private UserService userService;
 	private EmailService emailService;
 	
+	
 	@Autowired
 	public RegistrationController(BCryptPasswordEncoder bCryptPasswordEncoder,
 			UserService userService, EmailService emailService) {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 		this.userService = userService;
-		this.emailService = emailService;
+		this.emailService= emailService;
 	}
 	
 	// Return registration form template
@@ -83,6 +84,7 @@ public class RegistrationController {
 					+ appUrl + "/setpassword?token=" + user.getConfirmationToken());
 			registrationEmail.setFrom("noreply@domain.com");
 			
+			//emailService.sendEmail(registrationEmail);
 			emailService.sendEmail(registrationEmail);
 			
 			modelAndView.addObject("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());

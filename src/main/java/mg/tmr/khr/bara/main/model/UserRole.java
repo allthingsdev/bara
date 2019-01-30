@@ -2,6 +2,8 @@ package mg.tmr.khr.bara.main.model;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,10 +25,10 @@ public class UserRole {
 
 	/*===============START TABLE COLUMNS===================*/
 	@Id
-	@Column(name = "user_role_id", updatable = false, nullable = false)
+	@Column(name = "id", updatable = false, nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-	private int userRoleId;
+	private Long id;
 	
 	@Size(max = 255)
     @Column(name = "user_role_name")
@@ -52,27 +54,26 @@ public class UserRole {
     
     /*-----------start relations-----------*/
     
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         name = "roles_permissions", 
-        joinColumns = @JoinColumn(
-          name = "role_id", referencedColumnName = "id"), 
-        inverseJoinColumns = @JoinColumn(
-          name = "permission_id", referencedColumnName = "id"))
-    private Collection<Permission> permission;
-    
+        joinColumns = { @JoinColumn(name = "role_id") }, 
+        inverseJoinColumns = { @JoinColumn(name = "permission_id") }
+    )
+    Collection<Permission> permission = new HashSet<>();
+        
     /*-----------end relations-----------*/
     
     /*===============END TABLE COLUMNS===================*/
     
     /*===============mutators/accessors==================*/
     
-    public int getUserRoleId() {
-		return userRoleId;
+    public Long getId() {
+		return id;
 	}
 
-	public void setUserRoleId(int userRoleId) {
-		this.userRoleId = userRoleId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getUserRoleName() {
